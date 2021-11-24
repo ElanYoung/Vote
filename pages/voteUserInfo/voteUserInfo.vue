@@ -22,7 +22,7 @@
 					<van-tabbar-item>
 						<image slot="icon" :src="icon[2].normal" mode="aspectFit" style="width: 30px; height: 18px;" />
 						<image slot="icon-active" :src="icon[2].active" mode="aspectFit" style="width: 30px; height: 18px;" />
-						活动详情
+						活动详情 
 					</van-tabbar-item>
 				</van-tabbar>
 			</view>

@@ -120,14 +120,14 @@ export default {
 
 			fileList: [
 				{
-					url: '/static/imgMain/swiper/d1.jpg',
+					url: '/static/imgVoteRank/imgHead/h4.jpg',
 					name: '图片1',
-					deletable: false
+					deletable: true
 				},
 				// Uploader 根据文件后缀来判断是否为图片文件
 				// 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
 				{
-					url: '/static/imgMain/swiper/d2.jpg',
+					url: '/static/imgVoteRank/imgHead/h6.jpg',
 					name: '图片2',
 					isImage: true,
 					deletable: true

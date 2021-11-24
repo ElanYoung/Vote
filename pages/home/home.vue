@@ -14,9 +14,9 @@
 					indicator-color="rgba(255, 255, 255, .3)"
 					indicator-active-color="#FFF"
 				>
-					<swiper-item><van-image width="100%" height="100%" fit="scale-down" src="/static/imgMain/swiper/d1.jpg" /></swiper-item>
-					<swiper-item><van-image width="100%" height="100%" fit="scale-down" src="/static/imgMain/swiper/d2.jpg" /></swiper-item>
-					<swiper-item><van-image width="100%" height="100%" fit="scale-down" src="/static/imgMain/swiper/d3.jpg" /></swiper-item>
+					<swiper-item><van-image width="100%" height="100%" fit="scale-down" src="/static/imgMain/swiper/d1.png" /></swiper-item>
+					<swiper-item><van-image width="100%" height="100%" fit="scale-down" src="/static/imgMain/swiper/d2.png" /></swiper-item>
+					<swiper-item><van-image width="100%" height="100%" fit="scale-down" src="/static/imgMain/swiper/d3.png" /></swiper-item>
 				</swiper>
 			</view>
 			<!-- 中间导航按钮 -->

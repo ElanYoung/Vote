@@ -18,7 +18,7 @@
 					</van-popup>
 				</view>
 				<view class="top-stepper">
-					<van-cell title="助力限制:" value=""><van-stepper value="1" @change="onStepperChange" /></van-cell>
+					<van-cell title="投票次数限制:" value=""><van-stepper value="1" @change="onStepperChange" /></van-cell>
 				</view>
 
 				<view class="mid-textarea">

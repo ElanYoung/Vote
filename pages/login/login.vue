@@ -24,8 +24,6 @@ export default {
 			uni.getUserProfile({
 				desc: '获取您的信息',
 				success(res) {
-					console.log(res)
-					console.log('res.userInfo.nickName:' + res.userInfo.nickName)
 					//向后端传数据
 					uni.request({
 						url: 'http://localhost:8080/v1/user/login',

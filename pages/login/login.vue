@@ -26,13 +26,20 @@ export default {
 				success(res) {
 					console.log(res)
 					console.log('res.userInfo.nickName:' + res.userInfo.nickName)
-					// this.nickName = res.userInfo.nickName;
 					//向后端传数据
 					uni.request({
 						url: 'http://localhost:8080/v1/user/login',
 						method: 'POST',
+						header: {
+							'content-type': 'application/json'
+						},
 						data: {
-							nickName: res.rawData.nickName
+							openid:'openid',
+							unionid:'unionid',
+							nickName:res.userInfo.nickName,
+							avatar_url:'avatar_url',
+							session_key:'session_key',
+							wx_profile:'wx_profile',
 						},
 						success: function(res) {
 							console.log(res)

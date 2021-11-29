@@ -25,7 +25,7 @@ export default {
 	data() {
 		return {
 			homeUrl: '/pages/home/home',
-			manageUrl: '/pages/homeChildren/manageVote/manageVote',
+			manageUrl: '/pages/home-item/manage-vote/manage-vote',
 			imgitem: '/static/imgVoteCreateSuccess/s1.png'
 		}
 	},
@@ -48,5 +48,5 @@ export default {
 </script>
 
 <style>
-@import url('voteCreateSuccess.less');
+@import url('vote-create-success.less');
 </style>

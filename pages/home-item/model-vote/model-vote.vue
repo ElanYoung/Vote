@@ -23,32 +23,32 @@ export default {
 				{
 					name: '金江名都杯沁阳市广场舞大赛网络人气大奖评选',
 					item: '/static/imgComponents/model/m1.png',
-					url: '/pages/homeChildren/manageVote/manageVote'
+					url: '/pages/home-item/manage-vote/manage-vote'
 				},
 				{
 					name: '佛山市华英中学第四届初三羽毛球比赛',
 					item: '/static/imgComponents/model/m2.png',
-					url: '/pages/homeChildren/manageVote/manageVote'
+					url: '/pages/home-item/manage-vote/manage-vote'
 				},
 				{
 					name: '兴业银行厦门马拉松最美的奔跑者评选',
 					item: '/static/imgComponents/model/m3.png',
-					url: '/pages/homeChildren/manageVote/manageVote'
+					url: '/pages/home-item/manage-vote/manage-vote'
 				},
 				{
 					name: '朝阳市最美环卫工评选，（城市守护者）',
 					item: '/static/imgComponents/model/m4.png',
-					url: '/pages/homeChildren/manageVote/manageVote'
+					url: '/pages/home-item/manage-vote/manage-vote'
 				},
 				{
 					name: '兴业银行厦门马拉松最美的奔跑者评选',
 					item: '/static/imgComponents/model/m5.png',
-					url: '/pages/homeChildren/manageVote/manageVote'
+					url: '/pages/home-item/manage-vote/manage-vote'
 				},
 				{
 					name: '朝阳市最美环卫工评选，（城市守护者）',
 					item: '/static/imgComponents/model/m6.png',
-					url: '/pages/homeChildren/manageVote/manageVote'
+					url: '/pages/home-item/manage-vote/manage-vote'
 				}
 			]
 		}

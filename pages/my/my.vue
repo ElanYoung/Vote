@@ -89,22 +89,22 @@ export default {
 				{
 					name: '投票管理',
 					imgUrl: '/static/imgMy/z1.png',
-					url: '/pages/myChildren/myManageVote/myManageVote'
+					url: '/pages/my-children/my-manage-vote/my-manage-vote'
 				},
 				{
 					name: '我参与的',
 					imgUrl: '/static/imgMy/z2.png',
-					url: '/pages/myChildren/myJoinVote/myJoinVote'
+					url: '/pages/my-children/my-join-vote/my-join-vote'
 				},
 				{
 					name: '我的助力',
 					imgUrl: '/static/imgMy/z3.png',
-					url: '/pages/homeChildren/manageVote/manageVote'
+					url: '/pages/home-item/manage-vote/manage-vote'
 				},
 				{
 					name: '我的账单',
 					imgUrl: '/static/imgMy/z4.png',
-					url: '/pages/homeChildren/helpCenter/helpCenter'
+					url: '/pages/home-item/help-center/help-center'
 				}
 			]
 		}

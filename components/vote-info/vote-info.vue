@@ -135,7 +135,7 @@ export default {
 		},
 		onJumpTo(){
 			uni.navigateTo({
-				url:'/pages/voteUserEnroll/voteUserEnroll'
+				url:'/pages/vote-user-enroll/vote-user-enroll'
 			})
 		}
 	}

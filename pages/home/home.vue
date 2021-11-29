@@ -86,57 +86,57 @@ export default {
 					item: '/static/imgComponents/index/c1.jpg',
 					pnum: '10',
 					vnum: '130000',
-					toUrl:'/pages/voteUserInfo/voteUserInfo'
+					toUrl:'/pages/vote-user-info/vote-user-info'
 				},
 				{
 					name: '投票模板',
 					item: '/static/imgComponents/index/c2.jpg',
 					pnum: '5',
 					vnum: '500000',
-					toUrl:'/pages/voteUserInfo/voteUserInfo'
+					toUrl:'/pages/vote-user-info/vote-user-info'
 				},
 				{
 					name: '投票管理',
 					item: '/static/imgComponents/index/c3.jpg',
 					pnum: '30',
 					vnum: '70000',
-					toUrl:'/pages/voteUserInfo/voteUserInfo'
+					toUrl:'/pages/vote-user-info/vote-user-info'
 				},
 				{
 					name: '帮助中心',
 					item: '/static/imgComponents/index/c4.jpg',
 					pnum: '333',
 					vnum: '105000',
-					toUrl:'/pages/voteUserInfo/voteUserInfo'
+					toUrl:'/pages/vote-user-info/vote-user-info'
 				},
 				{
 					name: '帮助中心',
 					item: '/static/imgComponents/index/c4.jpg',
 					pnum: '333',
 					vnum: '105000',
-					toUrl:'/pages/voteUserInfo/voteUserInfo'
+					toUrl:'/pages/vote-user-info/vote-user-info'
 				}
 			],
 			images: [
 				{
 					name: '最新投票',
 					imgUrl: '/static/imgMain/van-grid/b1.png',
-					url: '/pages/homeChildren/newVote/newVote'
+					url: '/pages/home-item/new-vote/new-vote'
 				},
 				{
 					name: '投票模板',
 					imgUrl: '/static/imgMain/van-grid/b2.png',
-					url: '/pages/homeChildren/modelVote/modelVote'
+					url: '/pages/home-item/model-vote/model-vote'
 				},
 				{
 					name: '投票管理',
 					imgUrl: '/static/imgMain/van-grid/b3.png',
-					url: '/pages/homeChildren/manageVote/manageVote'
+					url: '/pages/home-item/manage-vote/manage-vote'
 				},
 				{
 					name: '帮助中心',
 					imgUrl: '/static/imgMain/van-grid/b4.png',
-					url: '/pages/homeChildren/helpCenter/helpCenter'
+					url: '/pages/home-item/help-center/help-center'
 				}
 			]
 		}

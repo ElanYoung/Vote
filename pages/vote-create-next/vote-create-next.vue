@@ -50,7 +50,7 @@ export default {
 			allowChecked: false,
 			examineChecked: false,
 			showTypePicker: false,
-			nexturl: '/pages/voteCreateSuccess/voteCreateSuccess',
+			nexturl: '/pages/vote-create-success/vote-create-success',
 			textareaText:
 				'活动是由共同目的联合起来并完成一定社会职能的动作的总和。目的联合起来并完成一定社会职能的动作的总和。活动由目的、动目的联合起来并完成一定社会职能的动作的总和。活动由目的、动目的联合起来并完成一定社会职能的动作的总和。活动由目的、动活动由目的、动机、动作和共同性构成，具有完整的结构系统。苏联心理学家从20年代起就对活动进行了一系列研究。活动是由共同目的',
 			// TODO如何不写死！！！
@@ -96,5 +96,5 @@ export default {
 </script>
 
 <style>
-@import url('voteCreateNext.less');
+@import url('vote-create-next.less');
 </style>

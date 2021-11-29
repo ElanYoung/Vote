@@ -1,31 +1,28 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-		    "path" : "pages/myChildren/myJoinVote/myJoinVote",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "我参与的投票",
-		        "enablePullDownRefresh": false
-		    }
+			"path": "pages/my-children/my-join-vote/my-join-vote",
+			"style": {
+				"navigationBarTitleText": "我参与的投票",
+				"enablePullDownRefresh": false
+			}
 		},
 		{
-		    "path" : "pages/myChildren/myManageVote/myManageVote",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "个人投票管理",
-		        "enablePullDownRefresh": false
-		    }
+			"path": "pages/my-children/my-manage-vote/my-manage-vote",
+			"style": {
+				"navigationBarTitleText": "个人投票管理",
+				"enablePullDownRefresh": false
+			}
 		},
 		{
-		    "path" : "pages/voteUserEnroll/voteUserEnroll",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "选手报名",
-		        "enablePullDownRefresh": false
-		    }
+			"path": "pages/vote-user-enroll/vote-user-enroll",
+			"style": {
+				"navigationBarTitleText": "选手报名",
+				"enablePullDownRefresh": false
+			}
 		},
 		{
-			"path": "pages/voteUserInfo/voteUserInfo",
+			"path": "pages/vote-user-info/vote-user-info",
 			"style": {
 				"navigationBarTitleText": "投票详情",
 				"enablePullDownRefresh": false
@@ -44,21 +41,21 @@
 			}
 		},
 		{
-			"path": "pages/voteCreateSuccess/voteCreateSuccess",
+			"path": "pages/vote-create-success/vote-create-success",
 			"style": {
 				"navigationBarTitleText": "创建成功",
 				"enablePullDownRefresh": false
 			}
 		},
 		{
-			"path": "pages/voteCreateNext/voteCreateNext",
+			"path": "pages/vote-create-next/vote-create-next",
 			"style": {
 				"navigationBarTitleText": "创建投票下一步",
 				"enablePullDownRefresh": false
 			}
 		},
 		{
-			"path": "pages/voteCreate/voteCreate",
+			"path": "pages/vote-create/vote-create",
 			"style": {
 				"navigationBarTitleText": "创建投票"
 			}
@@ -70,25 +67,25 @@
 			}
 		},
 		{
-			"path": "pages/homeChildren/helpCenter/helpCenter",
+			"path": "pages/home-item/help-center/help-center",
 			"style": {
 				"navigationBarTitleText": "帮助中心"
 			}
 		},
 		{
-			"path": "pages/homeChildren/modelVote/modelVote",
+			"path": "pages/home-item/model-vote/model-vote",
 			"style": {
 				"navigationBarTitleText": "投票模板"
 			}
 		},
 		{
-			"path": "pages/homeChildren/manageVote/manageVote",
+			"path": "pages/home-item/manage-vote/manage-vote",
 			"style": {
 				"navigationBarTitleText": "投票管理"
 			}
 		},
 		{
-			"path": "pages/homeChildren/newVote/newVote",
+			"path": "pages/home-item/new-vote/new-vote",
 			"style": {
 				"navigationBarTitleText": "最新投票"
 			}
@@ -101,13 +98,13 @@
 			}
 		},
 		{
-			"path": "pages/homeChildren/helpCenterInfo/helpCenterInfo",
+			"path": "pages/home-item/help-center-info/help-center-info",
 			"style": {
 				"navigationBarTitleText": "帮助信息"
 			}
 		}
-        
-    ],
+
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "投票系统",
@@ -155,13 +152,13 @@
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			},
 			{
-				"name": "voteCreate", //模式名称
-				"path": "pages/voteCreate/voteCreate", //启动页面，必选
+				"name": "vote-create", //模式名称
+				"path": "pages/vote-create/vote-create", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			},
 			{
 				"name": "voteUserInfo", //模式名称
-				"path": "pages/voteUserInfo/voteUserInfo", //启动页面，必选
+				"path": "pages/vote-user-info/vote-user-info", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			},
 			{
@@ -182,7 +179,7 @@
 			},
 			{
 				"text": "添加",
-				"pagePath": "pages/voteCreate/voteCreate",
+				"pagePath": "pages/vote-create/vote-create",
 				"iconPath": "static/img/add.png",
 				"selectedIconPath": "static/img/add_h.png"
 			},

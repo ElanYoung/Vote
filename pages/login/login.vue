@@ -31,9 +31,6 @@ export default {
 					uni.request({
 						url: 'http://localhost:8081/v1/user/login',
 						method: 'POST',
-						header: {
-							'content-type': 'application/x-www-form-urlencoded'
-						},
 						data: {
 							nickName: res.rawData.nickName
 						},

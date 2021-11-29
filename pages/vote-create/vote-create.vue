@@ -105,7 +105,7 @@ export default {
 			voteData2: '',
 			voteDataTemp: '',
 			current: 0,
-			nexturl: '/pages/voteCreateNext/voteCreateNext',
+			nexturl: '/pages/vote-create-next/vote-create-next',
 			// radio: '1',
 			// 这里数据可以写死
 			data: [{ name: '生活' }, { name: '教育' }, { name: '科技' }, { name: '互联网' }, { name: '运动' }],
@@ -253,5 +253,5 @@ export default {
 </script>
 
 <style>
-@import url('voteCreate.less');
+@import url('vote-create.less');
 </style>

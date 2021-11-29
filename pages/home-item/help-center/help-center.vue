@@ -21,35 +21,35 @@ export default {
 			helpInfos: [
 				{
 					name: '1.如何设置活动标题？',
-					url: '/pages/homeChildren/helpCenterInfo/helpCenterInfo'
+					url: '/pages/home-item/help-center-info/help-center-info'
 				},
 				{
 					name: '2.什么是主办方介绍？',
-					url: '/pages/homeChildren/helpCenterInfo/helpCenterInfo'
+					url: '/pages/home-item/help-center-info/help-center-info'
 				},
 				{
 					name: '3.什么是投票结果？',
-					url: '/pages/homeChildren/helpCenterInfo/helpCenterInfo'
+					url: '/pages/home-item/help-center-info/help-center-info'
 				},
 				{
 					name: '4.如何联系主办方报名？',
-					url: '/pages/homeChildren/helpCenterInfo/helpCenterInfo'
+					url: '/pages/home-item/help-center-info/help-center-info'
 				},
 				{
 					name: '5.什么是投票结果？',
-					url: '/pages/homeChildren/helpCenterInfo/helpCenterInfo'
+					url: '/pages/home-item/help-center-info/help-center-info'
 				},
 				{
 					name: '6.一个人可以投票几次，助力几次',
-					url: '/pages/homeChildren/helpCenterInfo/helpCenterInfo'
+					url: '/pages/home-item/help-center-info/help-center-info'
 				},
 				{
 					name: '7.什么是票数显示？',
-					url: '/pages/homeChildren/helpCenterInfo/helpCenterInfo'
+					url: '/pages/home-item/help-center-info/help-center-info'
 				},
 				{
 					name: '8.如何创建一个投票？',
-					url: '/pages/homeChildren/helpCenterInfo/helpCenterInfo'
+					url: '/pages/home-item/help-center-info/help-center-info'
 				}
 			]
 		}

@@ -42,5 +42,5 @@ export default {
 </script>
 
 <style>
-@import url('voteUserEnroll.less');
+@import url('vote-user-enroll.less');
 </style>

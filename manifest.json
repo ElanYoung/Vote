@@ -1,5 +1,5 @@
 {
-    "name" : "VotingSystem",
+    "name" : "Vote",
     "appid" : "",
     "description" : "",
     "versionName" : "1.0.0",
@@ -53,7 +53,8 @@
         "appid" : "wxef2fe548162e3a02",
         "setting" : {
             "urlCheck" : false,
-            "es6" : true
+            "es6" : true,
+            "minified" : true
         },
         "usingComponents" : true
     },

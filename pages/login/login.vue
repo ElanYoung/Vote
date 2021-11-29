@@ -13,7 +13,10 @@
 <script>
 export default {
 	data() {
-		return {}
+		return {
+			voteUrl: 'http://localhost:8081',
+			nickName: ''
+		};
 	},
 	methods: {
 		onLogin() {
@@ -21,51 +24,35 @@ export default {
 			uni.getUserProfile({
 				desc: '获取您的信息',
 				success(res) {
-					console.log(res)
+					console.log(res);
+					console.log('res.userInfo.nickName:' + res.userInfo.nickName);
+					// this.nickName = res.userInfo.nickName;
+					//向后端传数据
+					uni.request({
+						url: 'http://localhost:8081/v1/user/login',
+						method: 'POST',
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						data: {
+							nickName: res.rawData.nickName
+						},
+						success: function(res) {
+							console.log(res);
+						}
+					});
 				}
-			})
-			uni.navigateTo({
-				url: '../main/main'
-			})
+			});
+
+			//跳转界面
+			uni.switchTab({
+				url: '/pages/home/home'
+			});
 		}
 	}
-}
+};
 </script>
 
-<style>
-.container {
-	position: absolute;
-	top: 40%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-}
-
-.title {
-	text-align: center;
-	margin-bottom: 180rpx;
-	font-family: STXinwei;
-	font-weight: bold;
-	font-size: 70rpx;
-}
-
-/* 通过id强调可以不用在每个样式后加!important */
-#login-button .login-button {
-	width: 532rpx;
-	background-color: #00adff;
-	color: #fff;
-	text-align: center;
-	border-radius: 50rpx;
-	box-shadow: 0 2 0 #00adff;
-	font-family: Microsoft YaHei;
-	font-size: 35rpx;
-}
-
-.login-image {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	height: 200rpx;
-	width: 200rpx;
-	margin-bottom: 60rpx;
-}
+<style style="less">
+@import url('login.less');
 </style>

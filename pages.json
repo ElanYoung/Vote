@@ -103,7 +103,6 @@
 				"navigationBarTitleText": "帮助信息"
 			}
 		}
-
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -138,10 +137,6 @@
 			"van-search": "/wxcomponents/vant/search/index",
 			"van-tabbar": "/wxcomponents/vant/tabbar/index",
 			"van-tabbar-item": "/wxcomponents/vant/tabbar-item/index"
-
-
-
-
 		}
 	},
 	"condition": { //模式配置，仅开发期间生效
@@ -191,5 +186,4 @@
 			}
 		]
 	}
-
 }

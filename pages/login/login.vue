@@ -16,7 +16,7 @@ export default {
 		return {
 			voteUrl: 'http://localhost:8081',
 			nickName: ''
-		};
+		}
 	},
 	methods: {
 		onLogin() {
@@ -24,30 +24,30 @@ export default {
 			uni.getUserProfile({
 				desc: '获取您的信息',
 				success(res) {
-					console.log(res);
-					console.log('res.userInfo.nickName:' + res.userInfo.nickName);
+					console.log(res)
+					console.log('res.userInfo.nickName:' + res.userInfo.nickName)
 					// this.nickName = res.userInfo.nickName;
 					//向后端传数据
 					uni.request({
-						url: 'http://localhost:8081/v1/user/login',
+						url: 'http://localhost:8080/v1/user/login',
 						method: 'POST',
 						data: {
 							nickName: res.rawData.nickName
 						},
 						success: function(res) {
-							console.log(res);
+							console.log(res)
 						}
-					});
+					})
 				}
-			});
+			})
 
 			//跳转界面
 			uni.switchTab({
 				url: '/pages/home/home'
-			});
+			})
 		}
 	}
-};
+}
 </script>
 
 <style style="less">

@@ -13,10 +13,7 @@
 <script>
 export default {
 	data() {
-		return {
-			voteUrl: 'http://localhost:8081',
-			nickName: ''
-		}
+		return {}
 	},
 	methods: {
 		onLogin() {
@@ -24,31 +21,46 @@ export default {
 			uni.getUserProfile({
 				desc: '获取您的信息',
 				success(res) {
-					//向后端传数据
-					uni.request({
-						url: 'http://localhost:8080/v1/user/login',
-						method: 'POST',
-						header: {
-							'content-type': 'application/json'
-						},
-						data: {
-							openid:'openid',
-							unionid:'unionid',
-							nickName:res.userInfo.nickName,
-							avatar_url:'avatar_url',
-							session_key:'session_key',
-							wx_profile:'wx_profile',
-						},
-						success: function(res) {
-							console.log(res)
+					console.log(res)
+					//获取code
+					uni.login({
+						// provider: 'weixin',
+						success: function(loginRes) {
+							console.log('测试测试：')
+							console.log(loginRes.code)
+
+							//向后端传数据
+							uni.request({
+								url: 'http://localhost:8080/v1/user/login',
+								method: 'POST',
+								header: {
+									'content-type': 'application/json'
+								},
+								data: {
+									openid: '',
+									unionid: '',
+									nickname: res.userInfo.nickName,
+									avatarUrl: res.userInfo.avatarUrl,
+									session_key: '',
+									wxProfile: res.userInfo,
+									code: loginRes.code
+								},
+								success: function(res) {
+									console.log(res)
+									console.log(res.data)
+									if (res.data === 'success') {
+										//跳转界面
+										uni.switchTab({
+											url: '/pages/home/home'
+										})
+									} else {
+										Toast.fail('无法登陆')
+									}
+								}
+							})
 						}
 					})
 				}
-			})
-
-			//跳转界面
-			uni.switchTab({
-				url: '/pages/home/home'
 			})
 		}
 	}

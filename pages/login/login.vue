@@ -48,13 +48,18 @@ export default {
 								success: function(res) {
 									console.log(res)
 									console.log(res.data)
-									if (res.data === 'success') {
+									if (res.data.code === 0) {
 										//跳转界面
 										uni.switchTab({
 											url: '/pages/home/home'
 										})
 									} else {
-										Toast.fail('无法登陆')
+										uni.showToast({
+											title: '无法登陆',
+											icon: 'none',
+											// 持续时间
+											duration: 1000
+										})
 									}
 								}
 							})

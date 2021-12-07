@@ -46,13 +46,16 @@ export default {
 									code: loginRes.code
 								},
 								success: function(res) {
+									console.log('正常！@')
 									console.log(res)
 									console.log(res.data)
+									console.log(res.data.data.openid)
 									if (res.data.code === 0) {
 										//跳转界面
 										uni.switchTab({
 											url: '/pages/home/home'
 										})
+										uni.setStorageSync('openid_key',res.data.data.openid)
 									} else {
 										uni.showToast({
 											title: '无法登陆',

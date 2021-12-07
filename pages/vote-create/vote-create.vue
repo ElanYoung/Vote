@@ -8,8 +8,8 @@
 			<view class="mid-text">
 				<van-cell-group>
 					<view class="vote-name">
-			<van-field value="" label="投票名称:" placeholder="请输入活动名称" input-align="right" />
-		            </view>
+						<van-field :value="voteName" label="投票名称:" placeholder="请输入活动名称" input-align="right" @change="voteName = $event.mp.detail" />
+					</view>
 					<view class="vote-type">
 						<van-field readonly :value="voteType" label="投票类型:" placeholder="请选择投票类型" input-align="right" @tap="showTypePicker = true" />
 						<!-- 圆角弹窗 -->
@@ -83,7 +83,7 @@
 			<!-- 底部单元格 -->
 			<view class="floor-btn">
 				<van-row>
-					<van-col span="6" offset="2"><van-button custom-class="temp-save-button" plain type="info">存草稿</van-button></van-col>
+					<van-col span="6" offset="2"><van-button custom-class="temp-save-button" plain type="info" @tap="onSaveTemp">存草稿</van-button></van-col>
 					<van-col span="8" offset="4"><van-button custom-class="next-button" type="info" @tap="onJumpTo(nexturl)">下一步</van-button></van-col>
 				</van-row>
 			</view>
@@ -96,6 +96,7 @@ import { datatimeformat } from '../../util/datatimeformat.js'
 export default {
 	data() {
 		return {
+			openid:'',
 			showTypePicker: false,
 			showDataPicker1: false,
 			showDataPicker2: false,
@@ -117,6 +118,9 @@ export default {
 			minDateEnd: '',
 			//当前时间
 			currentDate: new Date().getTime(),
+			categoryId: '',
+			voteName: '',
+			voteTypeId: 0,
 
 			fileList: [
 				{
@@ -133,7 +137,6 @@ export default {
 					deletable: true
 				}
 			],
-
 			images: [
 				{
 					name: '家庭教育1',
@@ -179,9 +182,33 @@ export default {
 		}
 	},
 	methods: {
+		onSaveTemp() {
+			console.log(this.name)
+			//向后端传数据
+			uni.request({
+				url: 'http://localhost:8080/v1/vote/saveDraft',
+				method: 'POST',
+				header: {
+					'content-type': 'application/json'
+				},
+				data: {
+					openid:this.openid,
+					name: this.voteName,
+					categoryId:this.voteTypeId,
+					startTime:this.minDateEnd,
+					endTime:this.maxDateStart,
+					status:0
+				},
+				success: function(res) {
+					console.log(res)
+				}
+			})
+		},
 		onConfirm(value, index) {
 			this.value = value
+			console.log(value)
 			console.log('onConfirm:' + value)
+			this.voteTypeId = value.detail.index
 			this.voteType = value.detail.value
 			this.showTypePicker = false
 		},
@@ -222,6 +249,7 @@ export default {
 			this.value = value
 			console.log('onConfirmData1-value:' + value.detail)
 			this.voteData1 = datatimeformat(value.detail)
+			console.log(this.voteData1)
 			//将当前日期设置为结束日期的最小值
 			this.minDateEnd = value.detail
 			this.showDataPicker1 = false
@@ -248,6 +276,10 @@ export default {
 		this.data.map(value => {
 			(value = value.name), this.columns.push(value)
 		})
+	},
+	onLoad(){
+		let openid = uni.getStorageSync('openid_key')
+		this.openid=openid
 	}
 }
 </script>

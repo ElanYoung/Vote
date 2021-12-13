@@ -3,7 +3,7 @@
 	<view>
 		<view class="container">
 			<!-- 上传图片 -->
-			<view class="top-uploader"><van-uploader :file-list="fileList" preview-size="225rpx" upload-text="上传活动照片" /></view>
+			<view class="top-uploader"><van-uploader :file-list="fileList" :after-read="imagesAfterRead" preview-size="225rpx" upload-text="上传活动照片" /></view>
 			<!-- 中间文本框 -->
 			<view class="mid-text">
 				<van-cell-group>
@@ -14,7 +14,7 @@
 						<van-field readonly :value="voteType" label="投票类型:" placeholder="请选择投票类型" input-align="right" @tap="showTypePicker = true" />
 						<!-- 圆角弹窗 -->
 						<van-popup :show="showTypePicker" round position="bottom">
-							<van-picker show-toolbar :columns="columns" default-index="2" @cancel="showTypePicker = false" @confirm="onConfirm" />
+							<van-picker show-toolbar :columns="columns" :default-index="voteTypeId" @cancel="showTypePicker = false" @confirm="onConfirm" />
 						</van-popup>
 					</view>
 					<view class="vote-data">
@@ -93,10 +93,11 @@
 
 <script>
 import { datatimeformat } from '../../util/datatimeformat.js'
+// import { uploadFileToTencentClound } from '../../util/COS.js'
 export default {
 	data() {
 		return {
-			openid:'',
+			openid: '',
 			showTypePicker: false,
 			showDataPicker1: false,
 			showDataPicker2: false,
@@ -120,23 +121,27 @@ export default {
 			currentDate: new Date().getTime(),
 			categoryId: '',
 			voteName: '',
-			voteTypeId: 0,
+			//分类序号
+			voteTypeId: 1,
 
 			fileList: [
 				{
 					url: '/static/imgVoteRank/imgHead/h4.jpg',
-					name: '图片1',
+					name: '图片111',
+					isImage: true,
 					deletable: true
 				},
 				// Uploader 根据文件后缀来判断是否为图片文件
 				// 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
 				{
 					url: '/static/imgVoteRank/imgHead/h6.jpg',
-					name: '图片2',
+					name: '图片112',
 					isImage: true,
 					deletable: true
 				}
 			],
+			imgNameList: [],
+			nameList: [{ name: '张三' }, { name: '李四' }, { name: '王五' }],
 			images: [
 				{
 					name: '家庭教育1',
@@ -182,8 +187,69 @@ export default {
 		}
 	},
 	methods: {
+		// imagesBeforeRead(event) {
+		// 	const fileList = []
+		// 	fileList.push(event)
+		// },
+		//图片上传
+		imagesAfterRead(event, detail) {
+			console.log('imagesAfterRead-event', event)
+			console.log('imagesAfterRead-detail', detail)
+			const COS = require('../../wxcomponents/txcloud/cos-wx-sdk-v5.js')
+			const cos = new COS({
+				SecretId: 'AKIDGK8cqnTt2uVoqb5IEtHNDm46sNbYDcka',
+				SecretKey: 'auxjETQ6VdV6PRCgtoTrzrSTEivrWu1s'
+			})
+			let filePath = event.url
+			let fileName = filePath.substr(filePath.lastIndexOf('/') + 1)
+			let uploadFileToTencentClound = (fileName, filePath) => {
+				return new Promise((resolve, reject) => {
+					cos.postObject(
+						{
+							Bucket: 'hollow-1308706291',
+							Region: 'ap-nanjing',
+							Key: 'voteImg/' + fileName,
+							FilePath: filePath,
+							onProgress: function(info) {
+								console.log(JSON.stringify(info))
+							}
+						},
+						function(err, data) {
+							console.log('[cos.postObject-err]', err || data)
+							resolve(data)
+						}
+					)
+				})
+			}
+
+			//返回正确数据
+			let resolveData = uploadFileToTencentClound(fileName, filePath)
+			resolveData.then(function(data) {
+				let newFilePath = data.Location
+				// todo 判断是否为空 不为空合并数组concat
+				const imageList = uni.getStorageSync('image')
+				if (imageList.length <= 0) {
+					uni.setStorageSync('image', [newFilePath])
+				} else {
+					uni.setStorageSync('image', imageList.concat([newFilePath]))
+				}
+
+				console.log('结束')
+			})
+		},
+		//存草稿
 		onSaveTemp() {
-			console.log(this.name)
+			//TODO 如何实现图片同步上传
+			let imageUrl = uni.getStorageSync('image')
+			console.log(imageUrl)
+			for (var i = 0; i < imageUrl.length; i++) {
+				this.fileList.push({
+					url: 'http://' + imageUrl[i],
+					name: '图片' + i,
+					isImage: true,
+					deletable: true
+				})
+			}
 			//向后端传数据
 			uni.request({
 				url: 'http://localhost:8080/v1/vote/saveDraft',
@@ -192,12 +258,13 @@ export default {
 					'content-type': 'application/json'
 				},
 				data: {
-					openid:this.openid,
+					openid: this.openid,
 					name: this.voteName,
-					categoryId:this.voteTypeId,
-					startTime:this.minDateEnd,
-					endTime:this.maxDateStart,
-					status:0
+					categoryId: this.voteTypeId,
+					startTime: this.minDateEnd,
+					endTime: this.maxDateStart,
+					status: 0,
+					imageList: imageUrl
 				},
 				success: function(res) {
 					console.log(res)
@@ -206,8 +273,7 @@ export default {
 		},
 		onConfirm(value, index) {
 			this.value = value
-			console.log(value)
-			console.log('onConfirm:' + value)
+			console.log('onConfirm:', value)
 			this.voteTypeId = value.detail.index
 			this.voteType = value.detail.value
 			this.showTypePicker = false
@@ -277,13 +343,14 @@ export default {
 			(value = value.name), this.columns.push(value)
 		})
 	},
-	onLoad(){
+	onLoad() {
 		let openid = uni.getStorageSync('openid_key')
-		this.openid=openid
+		this.openid = openid
+		uni.removeStorageSync('image')
 	}
 }
 </script>
 
-<style>
+<style style="less">
 @import url('vote-create.less');
 </style>

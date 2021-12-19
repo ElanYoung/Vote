@@ -42,9 +42,7 @@
 				</view>
 				<view class="mid-info-btn">
 					<van-row style="text-align: center;">
-						<van-col offset="7">
-							<van-button custom-class="enroll-btn" type="info" @tap="onJumpTo()">报名</van-button>
-						</van-col>
+						<van-col offset="7"><van-button custom-class="enroll-btn" type="info" @tap="onJumpTo()">报名</van-button></van-col>
 					</van-row>
 				</view>
 				<view class="mid-info-select">
@@ -74,9 +72,9 @@
 <script>
 export default {
 	name: 'vote-info',
-	props:{
-		voteInfos:{
-			type:Object
+	props: {
+		voteInfos: {
+			type: Object
 		}
 	},
 	data() {
@@ -93,8 +91,7 @@ export default {
 					img: '/static/imgVoteInfo/imgPlayer/user1.png',
 					userName: '王大雷',
 					voteNum: '18',
-					userNo: '001',
-					url: '/pages/homeChildren/manageVote/manageVote'
+					userNo: '001'
 				},
 				{
 					img: '/static/imgVoteInfo/imgPlayer/user2.png',
@@ -125,27 +122,66 @@ export default {
 					url: '/pages/homeChildren/manageVote/manageVote'
 				}
 			]
-		}
+		};
 	},
 	methods: {
 		onSearchChange(e) {
-			this.searchValue = e.detail
+			this.searchValue = e.detail;
 		},
+		//搜索操作
 		onSearchClick() {
 			uni.showToast({
 				title: '搜索成功' + this.searchValue,
 				// 持续时间
 				duration: 1000
-			})
+			});
 		},
 		//报名跳转
-		onJumpTo(){
+		onJumpTo() {
+			console.log('this.voteInfos.Alloption', this.voteInfos.Alloption);
 			uni.navigateTo({
-				url:'/pages/vote-user-enroll/vote-user-enroll'
-			})
+				//把voteId和UserId传给player表
+				url: '/pages/vote-user-enroll/vote-user-enroll?voteId=' + this.voteInfos.voteId 
+				+ '&userId=' + this.voteInfos.userId 
+			});
 		}
+	},
+	onLoad() {
+		console.log('vote-info测试');
+	},
+	//vue中的生命周期，子组件无法调用父组件的生命周期（原生小程序周期/uni-app周期）
+	//不能用create 因为必须要在数据渲染之后才可以调用到真实的voteid数据
+	mounted() {
+		this.infos.length = 0;
+		let that = this;
+		//TODO 获取数据
+		uni.request({
+			url: 'http://localhost:8080/v1/player/list',
+			method: 'POST',
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			data: {
+				voteId: this.voteInfos.voteId
+			},
+			success(res) {
+				console.log('vote-info-res', res);
+				//数组长度为0
+				let ListArray = [];
+				ListArray = res.data.data;
+				// console.log(ListArray[0].playerImages[0].image);
+				for (var i = 0; i < ListArray.length; i++) {
+					that.infos.push({
+						userName: ListArray[i].name,
+						img: 'http://' + ListArray[i].playerImages[0].image,
+						voteNum: ListArray[i].ticketNum,
+						userNo: i + 1
+					});
+				}
+			}
+		});
 	}
-}
+};
 </script>
 
 <style>

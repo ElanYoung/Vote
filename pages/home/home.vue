@@ -43,18 +43,14 @@
 					<van-tab :title="tabData[0]">
 						<view class="van-grid-icon">
 							<van-grid column-num="2" :border="true">
-								<van-grid-item use-slot v-for="(item, index) in imagesCard" :key="index">
-									<vote-item :imgItem="item" />
-								</van-grid-item>
+								<van-grid-item use-slot v-for="(item, index) in imagesCard" :key="index"><vote-item :imgItem="item" /></van-grid-item>
 							</van-grid>
 						</view>
 					</van-tab>
 					<van-tab :title="tabData[1]">
 						<view class="van-grid-icon">
 							<van-grid column-num="2" :border="true">
-								<van-grid-item use-slot v-for="(item, index) in imagesCard" :key="index">
-									<vote-item :imgItem="item" />
-								</van-grid-item>
+								<van-grid-item use-slot v-for="(item, index) in imagesCard" :key="index"><vote-item :imgItem="item" /></van-grid-item>
 							</van-grid>
 						</view>
 					</van-tab>
@@ -69,7 +65,7 @@
 
 <script>
 // VoteItem  =  vote-item 自动变换驼峰命名
-import VoteItem from '../../components/vote-item/vote-item.vue'
+import VoteItem from '../../components/vote-item/vote-item.vue';
 export default {
 	components: {
 		VoteItem
@@ -144,35 +140,32 @@ export default {
 					url: '/pages/home-item/help-center/help-center'
 				}
 			]
-		}
+		};
 	},
 	onShow() {
-		this.imagesCard.length = 0
-		let that = this
+		this.imagesCard.length = 0;
+		let that = this;
 		//TODO 获取数据
 		uni.request({
 			url: 'http://localhost:8080/v1/vote/list',
 			method: 'GET',
 			success(res) {
-				console.log('res', res)
+				console.log('res', res);
 				//数组长度为0
-				let ListArray = []
-				ListArray = res.data.data
-				that.imagesCardData = ListArray
-				console.log(ListArray[0].voteImgs[0].image)
+				let ListArray = [];
+				ListArray = res.data.data;
+				// console.log(ListArray[0].voteImages[0].image);
 				for (var i = 0; i < ListArray.length; i++) {
 					that.imagesCard.push({
 						name: ListArray[i].name,
-						item: 'http://' + ListArray[i].voteImgs[0].image,
+						item: 'http://' + ListArray[i].voteImages[0].image,
 						pnum: ListArray[i].totalTurnout,
 						vnum: ListArray[i].voteTotal,
-						toUrl:'/pages/vote-user-info/vote-user-info?AllDataObj='+encodeURIComponent(JSON.stringify(ListArray[i]))
-					})
+						toUrl: '/pages/vote-user-info/vote-user-info?AllDataObj=' + encodeURIComponent(JSON.stringify(ListArray[i]))
+					});
 				}
-				console.log('imagesCardData', that.imagesCardData)
-				console.log('imagesCard', that.imagesCard)
 			}
-		})
+		});
 	},
 	onLoad() {},
 	methods: {
@@ -180,50 +173,14 @@ export default {
 			uni.navigateTo({
 				url,
 				success(res) {
-					console.log(res)
+					console.log(res);
 				}
-			})
+			});
 		}
 	}
-}
+};
 </script>
 
-<style>
-.main-swiper {
-	width: 690rpx;
-	height: 300rpx;
-	margin: 15rpx auto;
-}
-
-.swiper {
-	width: 100%;
-	height: 100%;
-}
-
-.main-icon {
-	margin-top: 20rpx;
-	/* margin-bottom: -10rpx; */
-	/* align-items: center; */
-}
-
-.van-grid-font {
-	font-size: 26rpx;
-	font-family: Microsoft YaHei;
-	margin-top: 12rpx;
-}
-
-.main-tab {
-	width: 100%;
-	height: 84rpx;
-}
-
-.title-style {
-	font-size: 50rpx !important;
-	font-weight: bold !important;
-}
-
-.van-grid-btn {
-	height: 142rpx;
-	width: 110rpx;
-}
+<style lang="less">
+@import url('home.less');
 </style>

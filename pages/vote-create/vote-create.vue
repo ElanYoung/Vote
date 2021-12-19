@@ -83,7 +83,9 @@
 			<!-- 底部单元格 -->
 			<view class="floor-btn">
 				<van-row>
-					<van-col span="6" offset="2"><van-button custom-class="temp-save-button" plain type="info" @tap="onSaveTemp">存草稿</van-button></van-col>
+					<van-col span="6" offset="2">
+						<van-button custom-class="temp-save-button" plain type="info" @tap="onSaveTemp">存草稿</van-button>
+						</van-col>
 					<van-col span="8" offset="4"><van-button custom-class="next-button" type="info" @tap="onJumpTo(nexturl)">下一步</van-button></van-col>
 				</van-row>
 			</view>

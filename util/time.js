@@ -43,8 +43,8 @@ let datatimeformat = value => {
 function intervalTime(faultDate, completeTime) {
 	var stime = Date.parse(new Date(faultDate))
 	var etime = Date.parse(new Date(completeTime))
-	console.log('stime', stime)
-	console.log('etime', etime)
+	// console.log('stime', stime)
+	// console.log('etime', etime)
 	// 两个时间戳相差的毫秒数
 	var usedTime = etime - stime
 	// 计算相差的天数  

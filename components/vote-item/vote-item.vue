@@ -10,8 +10,8 @@
 			</view>
 			<view class="box-all-down">
 				<van-row class="box-part-text">
-					<van-col span="10">参与:{{ imgItem.pnum }}</van-col>
-					<van-col span="14">票数:{{ imgItem.vnum }}</van-col>
+					<van-col span="12">参与:{{ imgItem.pnum }}</van-col>
+					<van-col span="12">票数:{{ imgItem.vnum }}</van-col>
 				</van-row>
 			</view>
 		</view>

@@ -12,19 +12,19 @@
 					<van-row style="text-align: center;">
 						<van-col span="8">
 							<view id="num">
-								<text>{{ voteManNum }}</text>
+								<text>{{ voteInfos.voteManNum }}</text>
 							</view>
 							<view id="player"><text>投票选手</text></view>
 						</van-col>
 						<van-col span="8">
 							<view id="num">
-								<text>{{ voteAllNum }}</text>
+								<text>{{ voteInfos.voteAllNum }}</text>
 							</view>
 							<view id="player"><text>总投票数</text></view>
 						</van-col>
 						<van-col span="8">
 							<view id="num">
-								<text>{{ visitManNum }}</text>
+								<text>{{ voteInfos.visitManNum }}</text>
 							</view>
 							<view id="player"><text>总访问数</text></view>
 						</van-col>
@@ -35,7 +35,7 @@
 						<view class="mid-info-time-text">
 							<van-col span="12"><text>距离活动结束还有：</text></van-col>
 							<van-col span="12">
-								<text style="color: red; font-weight: bold;">{{ deadline }}</text>
+								<text style="color: red; font-weight: bold;">{{ voteInfos.deadline }}</text>
 							</van-col>
 						</view>
 					</van-row>
@@ -74,13 +74,18 @@
 <script>
 export default {
 	name: 'vote-info',
+	props:{
+		voteInfos:{
+			type:Object
+		}
+	},
 	data() {
 		return {
 			topImg: '/static/imgVoteInfo/vi1.png',
-			voteManNum: 10,
-			voteAllNum: 1890,
-			visitManNum: 56000,
-			deadline: '20天20时12分08秒',
+			// voteManNum: 10,
+			// voteAllNum: 1890,
+			// visitManNum: 56000,
+			// deadline: '20天20时12分08秒',
 			searchValue: '',
 			// tabbarIndex: 0,
 			infos: [
@@ -133,6 +138,7 @@ export default {
 				duration: 1000
 			})
 		},
+		//报名跳转
 		onJumpTo(){
 			uni.navigateTo({
 				url:'/pages/vote-user-enroll/vote-user-enroll'

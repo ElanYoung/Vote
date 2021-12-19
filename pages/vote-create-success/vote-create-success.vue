@@ -32,7 +32,12 @@ export default {
 	methods: {
 		onJumpToHome(url) {
 			uni.switchTab({
-				url
+				url,
+				success(res){
+					let page = getCurrentPages().pop()
+					if (page === undefined || page === null) return
+					page.onLoad()
+				}
 			})
 		},
 		onJumpToManage(url) {

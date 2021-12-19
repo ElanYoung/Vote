@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import { datatimeformat } from '../../util/datatimeformat.js'
+import { datatimeformat } from '../../util/time.js'
 // import { uploadFileToTencentClound } from '../../util/COS.js'
 export default {
 	data() {
@@ -123,6 +123,8 @@ export default {
 			voteName: '',
 			//分类序号
 			voteTypeId: 1,
+			//投票快照 暂时都是进行中
+			snapVote: '进行中',
 
 			fileList: [
 				{
@@ -141,7 +143,7 @@ export default {
 				}
 			],
 			imgNameList: [],
-			nameList: [{ name: '张三' }, { name: '李四' }, { name: '王五' }],
+			nameList: [{ name: '张三' }, { name: '李四' }, { name: '王五' }], //测试用
 			images: [
 				{
 					name: '家庭教育1',
@@ -233,13 +235,11 @@ export default {
 				} else {
 					uni.setStorageSync('image', imageList.concat([newFilePath]))
 				}
-
-				console.log('结束')
 			})
 		},
 		//存草稿
 		onSaveTemp() {
-			//TODO 如何实现图片同步上传
+			//TODO 如何实现图片同步上传 也就是上面的那个方法如何使用data中的this数据
 			let imageUrl = uni.getStorageSync('image')
 			console.log(imageUrl)
 			for (var i = 0; i < imageUrl.length; i++) {
@@ -263,14 +263,32 @@ export default {
 					categoryId: this.voteTypeId,
 					startTime: this.minDateEnd,
 					endTime: this.maxDateStart,
-					status: 0,
-					imageList: imageUrl
+					status: 0, //0表示暂存
+					imageList: imageUrl,
+
+					snapVote: this.snapVote
 				},
 				success: function(res) {
 					console.log(res)
 				}
 			})
 		},
+		//下一步选项
+		onJumpTo(url) {
+			let that = this
+			uni.navigateTo({
+				url,
+				success(res) {
+					console.log(res)
+					uni.setStorageSync('name', that.voteName)
+					uni.setStorageSync('categoryId', that.voteTypeId)
+					uni.setStorageSync('startTime', that.minDateEnd)
+					uni.setStorageSync('endTime', that.maxDateStart)
+					uni.setStorageSync('status', 0)
+				}
+			})
+		},
+		//单选确认
 		onConfirm(value, index) {
 			this.value = value
 			console.log('onConfirm:', value)
@@ -327,14 +345,6 @@ export default {
 			//如果先使用的结束时间，就将开始时间的最大时间变为结束时间
 			this.maxDateStart = value.detail
 			this.showDataPicker2 = false
-		},
-		onJumpTo(url) {
-			uni.navigateTo({
-				url,
-				success(res) {
-					console.log(res)
-				}
-			})
 		}
 	},
 	// 创建时给columns赋值  用于vote-type

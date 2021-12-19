@@ -18,7 +18,7 @@
 					</van-popup>
 				</view>
 				<view class="top-stepper">
-					<van-cell title="投票次数限制:" value=""><van-stepper value="1" @change="onStepperChange" /></van-cell>
+					<van-cell title="投票次数限制:" value=""><van-stepper :value="vanStepper" @change="onStepperChange" /></van-cell>
 				</view>
 
 				<view class="mid-textarea">
@@ -34,7 +34,7 @@
 
 				<view class="floor-btn">
 					<van-row>
-						<van-col span="6" offset="2"><van-button custom-class="save-button" plain type="info">存草稿</van-button></van-col>
+						<van-col span="6" offset="2"><van-button custom-class="save-button" plain type="info" @tap="onSaveTemp">存草稿</van-button></van-col>
 						<van-col span="8" offset="4"><van-button custom-class="public-button" type="info" @tap="onJumpTo(nexturl)">发布</van-button></van-col>
 					</van-row>
 				</view>
@@ -56,7 +56,19 @@ export default {
 			// TODO如何不写死！！！
 			voteStrict: '每位用户仅可投一票',
 			data: [{ name: '每位用户仅可投一票' }, { name: '每位用户每天可投一票' }],
-			columns: []
+			columns: [],
+			vanStepper: 1,
+			//投票快照 暂时都是进行中
+			snapVote: '进行中',
+
+			//上个页面的携带数据
+			openid: '',
+			name: '',
+			categoryId: '',
+			startTime: '',
+			endTime: '',
+			status: '',
+			imgUrl: ''
 		}
 	},
 	methods: {
@@ -70,6 +82,7 @@ export default {
 		},
 		onStepperChange(event) {
 			console.log(event.detail)
+			this.vanStepper = event.detail
 		},
 		onConfirm(value, index) {
 			this.value = value
@@ -77,11 +90,65 @@ export default {
 			this.voteStrict = value.detail.value
 			this.showTypePicker = false
 		},
+		//存草稿next
+		onSaveTemp() {
+			//向后端传数据next
+			uni.request({
+				url: 'http://localhost:8080/v1/vote/saveNextDraft',
+				method: 'POST',
+				header: {
+					'content-type': 'application/json'
+				},
+				data: {
+					voteLimit: this.voteStrict,
+					voteNumLimit: this.vanStepper,
+					description: this.textareaText,
+					snapVote: this.snapVote,
+
+					openid: this.openid,
+					name: this.name,
+					categoryId: this.categoryId,
+					startTime: this.startTime,
+					endTime: this.endTime,
+					status: 0, //表示暂存
+					imageList: this.imgUrl
+				},
+				success: function(res) {
+					console.log(res)
+				}
+			})
+		},
 		onJumpTo(url) {
+			let that=this
 			uni.navigateTo({
 				url,
 				success(res) {
 					console.log(res)
+					//向后端传数据next
+					uni.request({
+						url: 'http://localhost:8080/v1/vote/saveAll',
+						method: 'POST',
+						header: {
+							'content-type': 'application/json'
+						},
+						data: {
+							voteLimit: that.voteStrict,
+							voteNumLimit: that.vanStepper,
+							description: that.textareaText,
+							snapVote: that.snapVote,
+
+							openid: that.openid,
+							name: that.name,
+							categoryId: that.categoryId,
+							startTime: that.startTime,
+							endTime: that.endTime,
+							status: 1, //表示存在状态
+							imageList: that.imgUrl
+						},
+						success: function(res) {
+							console.log(res)
+						}
+					})
 				}
 			})
 		}
@@ -91,6 +158,23 @@ export default {
 		this.data.map(value => {
 			(value = value.name), this.columns.push(value)
 		})
+	},
+	onLoad() {
+		let openid = uni.getStorageSync('openid_key')
+		let name = uni.getStorageSync('name')
+		let categoryId = uni.getStorageSync('categoryId')
+		let startTime = uni.getStorageSync('startTime')
+		let endTime = uni.getStorageSync('endTime')
+		let status = uni.getStorageSync('status')
+		let imgUrl = uni.getStorageSync('image')
+
+		this.openid = openid
+		this.name = name
+		this.categoryId = categoryId
+		this.startTime = startTime
+		this.endTime = endTime
+		this.status = status
+		this.imgUrl = imgUrl
 	}
 }
 </script>

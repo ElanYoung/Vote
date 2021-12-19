@@ -2,11 +2,13 @@
 <template>
 	<view>
 		<view class="container">
+			<!-- 主体内容 -->
 			<view class="main-body">
-				<vote-info v-if="tabbarActive === 0"></vote-info>
+				<vote-info v-if="tabbarActive === 0" :voteInfos="mainInfo"></vote-info>
 				<vote-info-rank v-if="tabbarActive === 1"></vote-info-rank>
 				<vote-info-detail v-if="tabbarActive === 2"></vote-info-detail>
 			</view>
+			<!-- 底部导航栏 -->
 			<view class="floor-tabbar">
 				<van-tabbar :active="tabbarActive" @change="onTabbarChange()">
 					<van-tabbar-item>
@@ -22,7 +24,7 @@
 					<van-tabbar-item>
 						<image slot="icon" :src="icon[2].normal" mode="aspectFit" style="width: 30px; height: 18px;" />
 						<image slot="icon-active" :src="icon[2].active" mode="aspectFit" style="width: 30px; height: 18px;" />
-						活动详情 
+						活动详情
 					</van-tabbar-item>
 				</van-tabbar>
 			</view>
@@ -34,6 +36,9 @@
 import VoteInfo from '../../components/vote-info/vote-info.vue'
 import VoteInfoDetail from '../../components/vote-info-detail/vote-info-detail.vue'
 import VoteInfoRank from '../../components/vote-info-rank/vote-info-rank.vue'
+//时间戳计时工具类
+import { intervalTime } from '../../util/time.js'
+import { formateDateBack } from '../../util/time.js'
 export default {
 	components: {
 		VoteInfo,
@@ -60,7 +65,13 @@ export default {
 					normal: '/static/imgVoteInfo/tabbar/riFill-article-fill.svg',
 					active: '/static/imgVoteInfo/tabbar/riFill-article-fill Copy.svg'
 				}
-			]
+			],
+			mainInfo: {
+				voteManNum: 10,
+				voteAllNum: 1890,
+				visitManNum: 56000,
+				deadline: ''
+			}
 		}
 	},
 	methods: {
@@ -69,6 +80,21 @@ export default {
 		onTabbarChange(event) {
 			this.tabbarActive = event.detail
 		}
+	},
+	onLoad(option) {
+		let AllDataObj = JSON.parse(decodeURIComponent(option.AllDataObj))
+		this.mainInfo.voteManNum = AllDataObj.totalTurnout
+		this.mainInfo.voteAllNum = AllDataObj.voteTotal
+		this.mainInfo.visitManNum = AllDataObj.visitNum
+		setInterval(() => {
+			//得到当前时间
+			let currTime = new Date().getTime()
+			//将数据格式化变为时间戳
+			let endTime = new Date(formateDateBack(AllDataObj.endTime)).getTime()
+			//需要格式化后端的数据
+			let timeGap = intervalTime(currTime, endTime)
+			this.mainInfo.deadline = timeGap
+		}, 100)
 	}
 }
 </script>

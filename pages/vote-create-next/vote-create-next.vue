@@ -52,7 +52,7 @@ export default {
 			showTypePicker: false,
 			nexturl: '/pages/vote-create-success/vote-create-success',
 			textareaText:
-				'活动是由共同目的联合起来并完成一定社会职能的动作的总和。目的联合起来并完成一定社会职能的动作的总和。活动由目的、动目的联合起来并完成一定社会职能的动作的总和。活动由目的、动目的联合起来并完成一定社会职能的动作的总和。活动由目的、动活动由目的、动机、动作和共同性构成，具有完整的结构系统。苏联心理学家从20年代起就对活动进行了一系列研究。活动是由共同目的',
+				'活动是由共同目的联合起来并完成一定社会职能的动作的总和。',
 			// TODO如何不写死！！！
 			voteStrict: '每位用户仅可投一票',
 			data: [{ name: '每位用户仅可投一票' }, { name: '每位用户每天可投一票' }],
@@ -94,7 +94,7 @@ export default {
 		onSaveTemp() {
 			//向后端传数据next
 			uni.request({
-				url: 'http://localhost:8080/v1/vote/saveNextDraft',
+				url: 'http://localhost:8081/v1/vote/saveNextDraft',
 				method: 'POST',
 				header: {
 					'content-type': 'application/json'
@@ -119,14 +119,14 @@ export default {
 			})
 		},
 		onJumpTo(url) {
-			let that=this
+			let that = this
 			uni.navigateTo({
 				url,
 				success(res) {
 					console.log(res)
 					//向后端传数据next
 					uni.request({
-						url: 'http://localhost:8080/v1/vote/saveAll',
+						url: 'http://localhost:8081/v1/vote/saveAll',
 						method: 'POST',
 						header: {
 							'content-type': 'application/json'
@@ -147,6 +147,7 @@ export default {
 						},
 						success: function(res) {
 							console.log(res)
+							console.log('成功传入数据库')
 						}
 					})
 				}
@@ -159,21 +160,27 @@ export default {
 			(value = value.name), this.columns.push(value)
 		})
 	},
-	onLoad() {
-		let openid = uni.getStorageSync('openid_key')
-		let name = uni.getStorageSync('name')
-		let categoryId = uni.getStorageSync('categoryId')
-		let startTime = uni.getStorageSync('startTime')
-		let endTime = uni.getStorageSync('endTime')
-		let status = uni.getStorageSync('status')
-		let imgUrl = uni.getStorageSync('image')
+	onLoad(option) {
+		let that=this
+		const eventChannel = this.getOpenerEventChannel()
+		eventChannel.on('vote-create-data', function(data) {
+			console.log(data)
+			that.openid = data.data.openid
+			that.name = data.data.name
+			that.categoryId = data.data.categoryId
+			that.startTime = data.data.startTime
+			that.endTime = data.data.endTime
+		})
+		// 使用缓存做不行！第一次数据会出错
+		// let openid = uni.getStorageSync('openid_key')
+		// let name = uni.getStorageSync('name')
+		// let categoryId = uni.getStorageSync('categoryId')
+		// let startTime = uni.getStorageSync('startTime')
+		// let endTime = uni.getStorageSync('endTime')
+		// let status = uni.getStorageSync('status')
+		// let imgUrl = uni.getStorageSync('image')
 
-		this.openid = openid
-		this.name = name
-		this.categoryId = categoryId
-		this.startTime = startTime
-		this.endTime = endTime
-		this.status = status
+		let imgUrl = uni.getStorageSync('image')
 		this.imgUrl = imgUrl
 	}
 }

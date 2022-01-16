@@ -31,7 +31,7 @@ export default {
 
 							//向后端传数据
 							uni.request({
-								url: 'http://localhost:8080/v1/user/login',
+								url: 'http://localhost:8081/v1/user/login',
 								method: 'POST',
 								header: {
 									'content-type': 'application/json'

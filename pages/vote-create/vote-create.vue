@@ -83,10 +83,8 @@
 			<!-- 底部单元格 -->
 			<view class="floor-btn">
 				<van-row>
-					<van-col span="6" offset="2">
-						<van-button custom-class="temp-save-button" plain type="info" @tap="onSaveTemp">存草稿</van-button>
-						</van-col>
-					<van-col span="8" offset="4"><van-button custom-class="next-button" type="info" @tap="onJumpTo(nexturl)">下一步</van-button></van-col>
+					<van-col span="6" offset="2"><van-button custom-class="temp-save-button" plain type="info" @tap="onSaveTemp">存草稿</van-button></van-col>
+					<van-col span="8" offset="4"><van-button custom-class="next-button" type="info" @tap="onJumpTo()">下一步</van-button></van-col>
 				</van-row>
 			</view>
 		</view>
@@ -109,7 +107,6 @@ export default {
 			voteData2: '',
 			voteDataTemp: '',
 			current: 0,
-			nexturl: '/pages/vote-create-next/vote-create-next',
 			// radio: '1',
 			// 这里数据可以写死
 			data: [{ name: '生活' }, { name: '教育' }, { name: '科技' }, { name: '互联网' }, { name: '运动' }],
@@ -130,7 +127,7 @@ export default {
 
 			fileList: [
 				{
-					url: '/static/imgVoteRank/imgHead/h4.jpg',
+					url: '/static/imgVoteRank/imgHead/h1.jpg',
 					name: '图片111',
 					isImage: true,
 					deletable: true
@@ -138,7 +135,7 @@ export default {
 				// Uploader 根据文件后缀来判断是否为图片文件
 				// 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
 				{
-					url: '/static/imgVoteRank/imgHead/h6.jpg',
+					url: '/static/imgVoteRank/imgHead/h2.jpg',
 					name: '图片112',
 					isImage: true,
 					deletable: true
@@ -201,8 +198,8 @@ export default {
 			console.log('imagesAfterRead-detail', detail)
 			const COS = require('../../wxcomponents/txcloud/cos-wx-sdk-v5.js')
 			const cos = new COS({
-				SecretId: 'AKIDGK8cqnTt2uVoqb5IEtHNDm46sNbYDcka',
-				SecretKey: 'auxjETQ6VdV6PRCgtoTrzrSTEivrWu1s'
+				SecretId: 'SecretId',
+				SecretKey: 'SecretKey'
 			})
 			let filePath = event.url
 			let fileName = filePath.substr(filePath.lastIndexOf('/') + 1)
@@ -254,7 +251,7 @@ export default {
 			}
 			//向后端传数据
 			uni.request({
-				url: 'http://localhost:8080/v1/vote/saveDraft',
+				url: 'http://localhost:8081/v1/vote/saveDraft',
 				method: 'POST',
 				header: {
 					'content-type': 'application/json'
@@ -276,17 +273,27 @@ export default {
 			})
 		},
 		//下一步选项
-		onJumpTo(url) {
+		onJumpTo() {
 			let that = this
 			uni.navigateTo({
-				url,
+				url: '/pages/vote-create-next/vote-create-next',
 				success(res) {
+					// 通过eventChannel向被打开页面传送数据
+					const data = {
+						name: that.voteName,
+						categoryId: that.voteTypeId,
+						startTime: that.minDateEnd,
+						endTime: that.maxDateStart,
+						openid: that.openid
+					}
+					res.eventChannel.emit('vote-create-data', { data: data })
 					console.log(res)
-					uni.setStorageSync('name', that.voteName)
-					uni.setStorageSync('categoryId', that.voteTypeId)
-					uni.setStorageSync('startTime', that.minDateEnd)
-					uni.setStorageSync('endTime', that.maxDateStart)
-					uni.setStorageSync('status', 0)
+					//不能使用缓存
+					// uni.setStorageSync('name', that.voteName)
+					// uni.setStorageSync('categoryId', that.voteTypeId)
+					// uni.setStorageSync('startTime', that.minDateEnd)
+					// uni.setStorageSync('endTime', that.maxDateStart)
+					// uni.setStorageSync('status', 0)
 				}
 			})
 		},
@@ -354,12 +361,11 @@ export default {
 		this.data.map(value => {
 			(value = value.name), this.columns.push(value)
 		})
-	},
-	onLoad() {
 		let openid = uni.getStorageSync('openid_key')
 		this.openid = openid
 		uni.removeStorageSync('image')
-	}
+	},
+	onLoad() {}
 }
 </script>
 

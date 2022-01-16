@@ -33,12 +33,12 @@
 </template>
 
 <script>
-import VoteInfo from '../../components/vote-info/vote-info.vue';
-import VoteInfoDetail from '../../components/vote-info-detail/vote-info-detail.vue';
-import VoteInfoRank from '../../components/vote-info-rank/vote-info-rank.vue';
+import VoteInfo from '../../components/vote-info/vote-info.vue'
+import VoteInfoDetail from '../../components/vote-info-detail/vote-info-detail.vue'
+import VoteInfoRank from '../../components/vote-info-rank/vote-info-rank.vue'
 //时间戳计时工具类
-import { intervalTime } from '../../util/time.js';
-import { formateDateBack } from '../../util/time.js';
+import { intervalTime } from '../../util/time.js'
+import { formateDateBack } from '../../util/time.js'
 export default {
 	components: {
 		VoteInfo,
@@ -72,36 +72,43 @@ export default {
 				visitManNum: 56000,
 				deadline: '',
 				voteId: 0,
-				userId: 0,
+				userId: 0
 			}
-		};
+		}
 	},
 	methods: {
 		// 底部标签栏转变
 		// TODO 如何修改不让底部栏全部变蓝色  把主界面变为组件通过隐藏显示即可实现
 		onTabbarChange(event) {
-			this.tabbarActive = event.detail;
+			this.tabbarActive = event.detail
 		}
 	},
 	onLoad(option) {
-		let AllDataObj = JSON.parse(decodeURIComponent(option.AllDataObj));
-		console.log('AllDataObj格式转换后', AllDataObj);
-		this.mainInfo.voteId = AllDataObj.id;
-		this.mainInfo.userId = AllDataObj.userId;
-		this.mainInfo.voteManNum = AllDataObj.totalTurnout;
-		this.mainInfo.voteAllNum = AllDataObj.voteTotal;
-		this.mainInfo.visitManNum = AllDataObj.visitNum;
+		console.log('option', option)
+		let AllDataObj = JSON.parse(decodeURIComponent(option.AllDataObj))
+		console.log('AllDataObj格式转换后', AllDataObj)
+		this.mainInfo.voteId = AllDataObj.id
+		this.mainInfo.userId = AllDataObj.userId
+		this.mainInfo.voteManNum = AllDataObj.totalTurnout
+		this.mainInfo.voteAllNum = AllDataObj.voteTotal
+		this.mainInfo.visitManNum = AllDataObj.visitNum
 		setInterval(() => {
 			//得到当前时间
-			let currTime = new Date().getTime();
+			let currTime = new Date().getTime()
 			//将数据格式化变为时间戳
-			let endTime = new Date(formateDateBack(AllDataObj.endTime)).getTime();
-			//需要格式化后端的数据
-			let timeGap = intervalTime(currTime, endTime);
-			this.mainInfo.deadline = timeGap;
-		}, 100);
+			let endTime = new Date(formateDateBack(AllDataObj.endTime)).getTime()
+			console.log('currTime', currTime)
+			console.log('endTime', endTime)
+			if (currTime <= endTime) {
+				// 需要格式化后端的数据
+				let timeGap = intervalTime(currTime, endTime)
+				this.mainInfo.deadline = timeGap
+			} else {
+				this.mainInfo.deadline = '时间已到，投票结束！'
+			}
+		}, 1000)
 	}
-};
+}
 </script>
 
 <style lang="less">

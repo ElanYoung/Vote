@@ -87,46 +87,46 @@ export default {
 			searchValue: '',
 			// tabbarIndex: 0,
 			infos: [
-				{
-					img: '/static/imgVoteInfo/imgPlayer/user1.png',
-					userName: '王大雷',
-					voteNum: '18',
-					userNo: '001'
-				},
-				{
-					img: '/static/imgVoteInfo/imgPlayer/user2.png',
-					userName: '陈二狗',
-					voteNum: '144',
-					userNo: '002',
-					url: '/pages/homeChildren/manageVote/manageVote'
-				},
-				{
-					img: '/static/imgVoteInfo/imgPlayer/user1.png',
-					userName: '曹三刀',
-					voteNum: '1424',
-					userNo: '003',
-					url: '/pages/homeChildren/manageVote/manageVote'
-				},
-				{
-					img: '/static/imgVoteInfo/imgPlayer/user2.png',
-					userName: '范四鬼',
-					voteNum: '24',
-					userNo: '004',
-					url: '/pages/homeChildren/manageVote/manageVote'
-				},
-				{
-					img: '/static/imgVoteInfo/imgPlayer/user2.png',
-					userName: '范四鬼',
-					voteNum: '24',
-					userNo: '004',
-					url: '/pages/homeChildren/manageVote/manageVote'
-				}
+				// {
+				// 	img: '/static/imgVoteInfo/imgPlayer/user1.png',
+				// 	userName: '王大雷',
+				// 	voteNum: '18',
+				// 	userNo: '001'
+				// },
+				// {
+				// 	img: '/static/imgVoteInfo/imgPlayer/user2.png',
+				// 	userName: '陈二狗',
+				// 	voteNum: '144',
+				// 	userNo: '002',
+				// 	url: '/pages/homeChildren/manageVote/manageVote'
+				// },
+				// {
+				// 	img: '/static/imgVoteInfo/imgPlayer/user1.png',
+				// 	userName: '曹三刀',
+				// 	voteNum: '1424',
+				// 	userNo: '003',
+				// 	url: '/pages/homeChildren/manageVote/manageVote'
+				// },
+				// {
+				// 	img: '/static/imgVoteInfo/imgPlayer/user2.png',
+				// 	userName: '范四鬼',
+				// 	voteNum: '24',
+				// 	userNo: '004',
+				// 	url: '/pages/homeChildren/manageVote/manageVote'
+				// },
+				// {
+				// 	img: '/static/imgVoteInfo/imgPlayer/user2.png',
+				// 	userName: '范四鬼',
+				// 	voteNum: '24',
+				// 	userNo: '004',
+				// 	url: '/pages/homeChildren/manageVote/manageVote'
+				// }
 			]
-		};
+		}
 	},
 	methods: {
 		onSearchChange(e) {
-			this.searchValue = e.detail;
+			this.searchValue = e.detail
 		},
 		//搜索操作
 		onSearchClick() {
@@ -134,29 +134,28 @@ export default {
 				title: '搜索成功' + this.searchValue,
 				// 持续时间
 				duration: 1000
-			});
+			})
 		},
 		//报名跳转
 		onJumpTo() {
-			console.log('this.voteInfos.Alloption', this.voteInfos.Alloption);
+			console.log('this.voteInfos.Alloption', this.voteInfos.Alloption)
 			uni.navigateTo({
 				//把voteId和UserId传给player表
-				url: '/pages/vote-user-enroll/vote-user-enroll?voteId=' + this.voteInfos.voteId 
-				+ '&userId=' + this.voteInfos.userId 
-			});
+				url: '/pages/vote-user-enroll/vote-user-enroll?voteId=' + this.voteInfos.voteId + '&userId=' + this.voteInfos.userId
+			})
 		}
 	},
 	onLoad() {
-		console.log('vote-info测试');
+		console.log('vote-info测试')
 	},
 	//vue中的生命周期，子组件无法调用父组件的生命周期（原生小程序周期/uni-app周期）
 	//不能用create 因为必须要在数据渲染之后才可以调用到真实的voteid数据
 	mounted() {
-		this.infos.length = 0;
-		let that = this;
+		this.infos.length = 0
+		let that = this
 		//TODO 获取数据
 		uni.request({
-			url: 'http://localhost:8080/v1/player/list',
+			url: 'http://localhost:8081/v1/player/list',
 			method: 'POST',
 			header: {
 				'content-type': 'application/x-www-form-urlencoded'
@@ -165,23 +164,26 @@ export default {
 				voteId: this.voteInfos.voteId
 			},
 			success(res) {
-				console.log('vote-info-res', res);
+				console.log('vote-info-res', res)
 				//数组长度为0
-				let ListArray = [];
-				ListArray = res.data.data;
+				let ListArray = []
+				ListArray = res.data.data
 				// console.log(ListArray[0].playerImages[0].image);
 				for (var i = 0; i < ListArray.length; i++) {
 					that.infos.push({
 						userName: ListArray[i].name,
 						img: 'http://' + ListArray[i].playerImages[0].image,
-						voteNum: ListArray[i].ticketNum,
-						userNo: i + 1
-					});
+						ticketNum: ListArray[i].ticketNum,
+						userNo: i + 1,
+						playerId: ListArray[i].id,
+						userId: ListArray[i].userId,
+						voteId: ListArray[i].voteId
+					})
 				}
 			}
-		});
+		})
 	}
-};
+}
 </script>
 
 <style>

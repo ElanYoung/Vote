@@ -11,7 +11,7 @@
 						<van-row class="box-main-text">
 							<van-col span="10" offset="2">{{ infoItem.userName }}</van-col>
 							<van-col span="8" offset="4">
-								<text style="color: #626262;">{{ infoItem.voteNum }}票</text>
+								<text style="color: #626262;">{{ tNum }}票</text>
 							</van-col>
 						</van-row>
 					</view>
@@ -25,6 +25,7 @@
 								<van-button size="small" type="info" @tap="onClickTicket()">投票</van-button>
 								<!-- </navigator> -->
 							</van-col>
+							<!-- {{ infoItem.playerId }}  测试用可以获取该用户playerid-->
 						</van-row>
 					</view>
 				</view>
@@ -42,15 +43,44 @@ export default {
 		}
 	},
 	data() {
-		return {}
+		return {
+			tNum: this.infoItem.ticketNum
+		}
 	},
 	methods: {
 		onClickTicket() {
-			uni.showToast({
-				title: this.infoItem.userNo+'号投票成功!',
-				icon:'success',
-				// 持续时间
-				duration: 1000
+			let that = this
+			console.log('this.infoItem', this.infoItem)
+			uni.request({
+				url: 'http://localhost:8081/v1/user/takeVoteUpdate',
+				method: 'POST',
+				header: {
+					'content-type': 'application/json'
+				},
+				data: {
+					userId: this.infoItem.userId,
+					playerId: this.infoItem.playerId,
+					voteId: this.infoItem.voteId
+				},
+				success(res) {
+					console.log('vote-info-main-选手卡片', res)
+					if (res.statusCode === 200 && res.data.code !== 5) {
+						that.tNum += 1
+						uni.showToast({
+							title: '为' + that.infoItem.userNo + '号投票成功',
+							icon: 'success',
+							// 持续时间
+							duration: 1000
+						})
+					}else{
+						uni.showToast({
+							title: '已达上限次数',
+							icon: 'error',
+							// 持续时间
+							duration: 1000
+						})
+					}
+				}
 			})
 		}
 	}

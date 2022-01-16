@@ -65,7 +65,7 @@
 
 <script>
 // VoteItem  =  vote-item 自动变换驼峰命名
-import VoteItem from '../../components/vote-item/vote-item.vue';
+import VoteItem from '../../components/vote-item/vote-item.vue'
 export default {
 	components: {
 		VoteItem
@@ -140,20 +140,20 @@ export default {
 					url: '/pages/home-item/help-center/help-center'
 				}
 			]
-		};
+		}
 	},
 	onShow() {
-		this.imagesCard.length = 0;
-		let that = this;
+		this.imagesCard.length = 0
+		let that = this
 		//TODO 获取数据
 		uni.request({
-			url: 'http://localhost:8080/v1/vote/list',
+			url: 'http://localhost:8081/v1/vote/list',
 			method: 'GET',
 			success(res) {
-				console.log('res', res);
+				console.log('res', res)
 				//数组长度为0
-				let ListArray = [];
-				ListArray = res.data.data;
+				let ListArray = []
+				ListArray = res.data.data
 				// console.log(ListArray[0].voteImages[0].image);
 				for (var i = 0; i < ListArray.length; i++) {
 					that.imagesCard.push({
@@ -162,10 +162,10 @@ export default {
 						pnum: ListArray[i].totalTurnout,
 						vnum: ListArray[i].voteTotal,
 						toUrl: '/pages/vote-user-info/vote-user-info?AllDataObj=' + encodeURIComponent(JSON.stringify(ListArray[i]))
-					});
+					})
 				}
 			}
-		});
+		})
 	},
 	onLoad() {},
 	methods: {
@@ -173,12 +173,12 @@ export default {
 			uni.navigateTo({
 				url,
 				success(res) {
-					console.log(res);
+					console.log(res)
 				}
-			});
+			})
 		}
 	}
-};
+}
 </script>
 
 <style lang="less">

@@ -67,13 +67,13 @@ function intervalTime(faultDate, completeTime) {
 
 //转换后台时间格式
 let formateDateBack = date => {
-	const arr = date.split('T')
+	const arr = (date || '').split('T')
 	const d = arr[0]
-	const darr = d.split('-')
+	const darr = (d || '').split('-')
 
 	const t = arr[1]
-	const tarr = t.split('.000')
-	const marr = tarr[0].split(':')
+	const tarr = (t || '').split('.000')
+	const marr = (tarr[0] || '').split(':')
 
 	const time =
 		parseInt(darr[0]) +

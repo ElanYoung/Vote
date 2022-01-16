@@ -4,8 +4,8 @@ const Region = 'ap-nanjing' //存储桶所在地域
 //创建一个 COS SDK 实例
 // SECRETID 和 SECRETKEY请登录 https://console.cloud.tencent.com/cam/capi 进行查看和管理
 const cos = new COS({
-	SecretId: 'AKIDGK8cqnTt2uVoqb5IEtHNDm46sNbYDcka',
-	SecretKey: 'auxjETQ6VdV6PRCgtoTrzrSTEivrWu1s',
+	SecretId: 'SecretId',
+	SecretKey: 'SecretKey',
 })
 //创建存储桶
 // cos.putBucket({

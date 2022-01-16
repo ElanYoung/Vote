@@ -26,34 +26,34 @@ export default {
 			votePlayName: '',
 			fileList: [
 				{
-					url: '/static/imgVoteRank/imgHead/h11.jpg',
+					url: '/static/imgVoteRank/imgHead/h3.jpg',
 					name: '图片1',
 					deletable: false
 				},
 				// Uploader 根据文件后缀来判断是否为图片文件
 				// 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
 				{
-					url: '/static/imgVoteRank/imgHead/h15.jpg',
+					url: '/static/imgVoteRank/imgHead/h1.jpg',
 					name: '图片2',
 					isImage: true,
 					deletable: true
 				}
 			],
 			InfoUrl: '/pages/vote-user-info/vote-user-info'
-		};
+		}
 	},
 	methods: {
 		//图片上传
 		imagesAfterRead(event, detail) {
-			console.log('imagesAfterRead-event', event);
-			console.log('imagesAfterRead-detail', detail);
-			const COS = require('../../wxcomponents/txcloud/cos-wx-sdk-v5.js');
+			console.log('imagesAfterRead-event', event)
+			console.log('imagesAfterRead-detail', detail)
+			const COS = require('../../wxcomponents/txcloud/cos-wx-sdk-v5.js')
 			const cos = new COS({
-				SecretId: 'AKIDGK8cqnTt2uVoqb5IEtHNDm46sNbYDcka',
-				SecretKey: 'auxjETQ6VdV6PRCgtoTrzrSTEivrWu1s'
-			});
-			let filePath = event.url;
-			let fileName = filePath.substr(filePath.lastIndexOf('/') + 1);
+				SecretId: 'SecretKey',
+				SecretKey: 'SecretKey'
+			})
+			let filePath = event.url
+			let fileName = filePath.substr(filePath.lastIndexOf('/') + 1)
 			let uploadFileToTencentClound = (fileName, filePath) => {
 				return new Promise((resolve, reject) => {
 					cos.postObject(
@@ -63,37 +63,37 @@ export default {
 							Key: 'playerImg/' + fileName,
 							FilePath: filePath,
 							onProgress: function(info) {
-								console.log(JSON.stringify(info));
+								console.log(JSON.stringify(info))
 							}
 						},
 						function(err, data) {
-							console.log('[cos.postObject-err]', err || data);
-							resolve(data);
+							console.log('[cos.postObject-err]', err || data)
+							resolve(data)
 						}
-					);
-				});
-			};
+					)
+				})
+			}
 
 			//返回正确数据
-			let resolveData = uploadFileToTencentClound(fileName, filePath);
+			let resolveData = uploadFileToTencentClound(fileName, filePath)
 			resolveData.then(function(data) {
-				let newFilePath = data.Location;
+				let newFilePath = data.Location
 				// todo 判断是否为空 不为空合并数组concat
-				const imageList = uni.getStorageSync('imagePlayer');
+				const imageList = uni.getStorageSync('imagePlayer')
 				if (imageList.length <= 0) {
-					uni.setStorageSync('imagePlayer', [newFilePath]);
+					uni.setStorageSync('imagePlayer', [newFilePath])
 				} else {
-					uni.setStorageSync('imagePlayer', imageList.concat([newFilePath]));
+					uni.setStorageSync('imagePlayer', imageList.concat([newFilePath]))
 				}
-			});
+			})
 		},
 		onJumpToInfoMain(form) {
-			let that = this;
-			let imageUrl = uni.getStorageSync('imagePlayer');
-			console.log(form);
-			console.log();
+			let that = this
+			let imageUrl = uni.getStorageSync('imagePlayer')
+			console.log(form)
+			console.log()
 			uni.request({
-				url: 'http://localhost:8080/v1/player/savePlayer',
+				url: 'http://localhost:8081/v1/player/savePlayer',
 				method: 'POST',
 				header: {
 					'content-type': 'application/json'
@@ -106,23 +106,23 @@ export default {
 				},
 				success: function(res) {
 					//成功后跳转
-					console.log(res);
+					console.log(res)
 					//返回上一个栈页面
 					//TODO 如何带值进行传送
 					uni.navigateBack({
 						delta: 2
 					})
 				}
-			});
+			})
 		}
 	},
 	onLoad(option) {
-		console.log('vote-user-enroll', option);
-		this.userId = option.userId;
-		this.voteId = option.voteId;
-		uni.removeStorageSync('imagePlayer');
+		console.log('vote-user-enroll', option)
+		this.userId = option.userId
+		this.voteId = option.voteId
+		uni.removeStorageSync('imagePlayer')
 	}
-};
+}
 </script>
 
 <style>
